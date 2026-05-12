@@ -16,7 +16,7 @@ gem "sidekiq"
 gem "rails_event_store"
 gem "faraday"
 gem "faraday-retry"
-gem "clerk-sdk-ruby"
+gem "clerk-sdk-ruby", require: "clerk"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

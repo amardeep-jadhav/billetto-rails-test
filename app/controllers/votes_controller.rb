@@ -1,4 +1,6 @@
 class VotesController < ApplicationController
+  before_action :require_clerk_session!
+
   def create
     Voting::CastVote.new.call(
       event_id:  params[:event_id],
@@ -9,12 +11,5 @@ class VotesController < ApplicationController
     redirect_to events_path
   rescue Voting::CastVote::InvalidDirection
     redirect_to events_path, alert: "Invalid vote direction."
-  end
-
-  private
-
-  # Temporary stub
-  def current_user_id
-    session[:demo_user_id] ||= "anonymous-#{SecureRandom.hex(4)}"
   end
 end
