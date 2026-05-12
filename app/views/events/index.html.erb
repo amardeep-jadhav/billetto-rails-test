@@ -1,0 +1,37 @@
+<div class="max-w-4xl mx-auto py-8 px-4">
+  <h1 class="text-3xl font-bold mb-6">Events</h1>
+
+  <% if @events.empty? %>
+    <p class="text-gray-600">No events yet. Run <code>bin/rails billetto:sync</code> to import.</p>
+  <% else %>
+    <div class="space-y-6">
+      <% @events.each do |event| %>
+        <article class="border rounded-lg overflow-hidden shadow-sm bg-white">
+          <% if event.image_url.present? %>
+            <img src="<%= event.image_url %>" alt="<%= event.title %>" class="w-full h-48 object-cover">
+          <% end %>
+
+          <div class="p-4">
+            <h2 class="text-xl font-semibold mb-2"><%= event.title %></h2>
+
+            <% if event.starts_at %>
+              <p class="text-sm text-gray-600 mb-2">
+                <%= event.starts_at.strftime("%a, %b %d %Y · %H:%M") %>
+              </p>
+            <% end %>
+
+            <% if event.description.present? %>
+              <p class="text-gray-700 mb-3"><%= truncate(event.description, length: 200) %></p>
+            <% end %>
+
+            <% if event.billetto_url.present? %>
+              <a href="<%= event.billetto_url %>" target="_blank" rel="noopener" class="text-blue-600 hover:underline text-sm">
+                View on Billetto →
+              </a>
+            <% end %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% end %>
+</div>
