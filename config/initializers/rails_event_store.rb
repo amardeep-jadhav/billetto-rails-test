@@ -7,4 +7,9 @@ Rails.configuration.to_prepare do
     IngestEventHandler.new,
     to: [Billetto::Events::EventIngested]
   )
+
+  Rails.configuration.event_store.subscribe(
+    Voting::VoteCountProjection.new,
+    to: [Voting::Events::EventUpvoted, Voting::Events::EventDownvoted]
+  )
 end
