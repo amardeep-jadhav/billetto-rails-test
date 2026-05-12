@@ -1,11 +1,19 @@
 <div class="max-w-4xl mx-auto py-8 px-4">
   <h1 class="text-3xl font-bold mb-6">Events</h1>
 
+  <% if flash[:alert] %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 mb-4 rounded">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
   <% if @events.empty? %>
     <p class="text-gray-600">No events yet. Run <code>bin/rails billetto:sync</code> to import.</p>
   <% else %>
     <div class="space-y-6">
       <% @events.each do |event| %>
+        <% count = @vote_counts[event.billetto_id] %>
+
         <article class="border rounded-lg overflow-hidden shadow-sm bg-white">
           <% if event.image_url.present? %>
             <img src="<%= event.image_url %>" alt="<%= event.title %>" class="w-full h-48 object-cover">
@@ -24,11 +32,23 @@
               <p class="text-gray-700 mb-3"><%= truncate(event.description, length: 200) %></p>
             <% end %>
 
-            <% if event.billetto_url.present? %>
-              <a href="<%= event.billetto_url %>" target="_blank" rel="noopener" class="text-blue-600 hover:underline text-sm">
-                View on Billetto →
-              </a>
-            <% end %>
+            <div class="flex items-center gap-3 mt-4">
+              <%= button_to "👍 #{count&.upvotes || 0}",
+                    event_votes_path(event.billetto_id, direction: "up"),
+                    method: :post,
+                    class: "px-3 py-1 border rounded hover:bg-gray-100 text-sm" %>
+
+              <%= button_to "👎 #{count&.downvotes || 0}",
+                    event_votes_path(event.billetto_id, direction: "down"),
+                    method: :post,
+                    class: "px-3 py-1 border rounded hover:bg-gray-100 text-sm" %>
+
+              <% if event.billetto_url.present? %>
+                <a href="<%= event.billetto_url %>" target="_blank" rel="noopener" class="ml-auto text-blue-600 hover:underline text-sm">
+                  View on Billetto →
+                </a>
+              <% end %>
+            </div>
           </div>
         </article>
       <% end %>
