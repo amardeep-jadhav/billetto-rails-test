@@ -18,6 +18,7 @@ group :development, :test do
   gem "bundler-audit", require: false
   gem "dotenv-rails"
   gem "brakeman", require: false
+  gem "rspec-rails"
 end
 
 group :development do
