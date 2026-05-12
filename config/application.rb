@@ -39,5 +39,10 @@ module BillettoRailsTest
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.active_job.queue_adapter = :sidekiq
+    config.autoload_paths += %W[
+      #{config.root}/app/domain
+      #{config.root}/app/integrations
+      #{config.root}/app/integrators
+    ]
   end
 end
