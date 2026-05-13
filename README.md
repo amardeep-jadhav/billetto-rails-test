@@ -49,7 +49,8 @@ app/
 ├── integrations/
 │   └── billetto/       # ACL: Faraday client + sync service + facts
 └── integrators/        # cross-context bridges (EventIngested → events table)
-​```
+​
+```
 
 **Event sourcing for voting.** Votes are facts in RES, not rows. `vote_counts`
 is a projection — derivable by replaying voting facts.
