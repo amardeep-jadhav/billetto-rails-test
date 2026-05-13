@@ -39,14 +39,17 @@ Covers `Events::Event` validations, `Voting::CastVote` decision logic,
 `VoteCountProjection` end-to-end through RES, and auth restriction on voting.
 
 ## Architecture
+
+​```
 app/
-├── controllers/        # thin: parse -> dispatch -> render
+├── controllers/        # thin: parse → dispatch → render
 ├── domain/
 │   ├── events/         # Event model
 │   └── voting/         # CastVote service, facts, read model, projection
 ├── integrations/
 │   └── billetto/       # ACL: Faraday client + sync service + facts
 └── integrators/        # cross-context bridges (EventIngested → events table)
+​```
 
 **Event sourcing for voting.** Votes are facts in RES, not rows. `vote_counts`
 is a projection — derivable by replaying voting facts.
