@@ -12,7 +12,6 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "thruster", require: false
 gem "image_processing", "~> 1.2"
-gem "sidekiq"
 gem "rails_event_store"
 gem "faraday"
 gem "faraday-retry"
